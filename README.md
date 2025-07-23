@@ -6,8 +6,8 @@ A comprehensive Selenium automation framework for testing DemoQA website (https:
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url>
-cd Selenium
+git clone https://github.com/NileshMaurya-github/Seleniumwithpython.git
+cd Seleniumwithpython
 
 # 2. Setup the project
 python setup.py
