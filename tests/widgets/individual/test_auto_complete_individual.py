@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import ElementClickInterceptedException
 import time
 
 
@@ -13,6 +14,13 @@ class AutoCompleteTest:
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 10)
         self.driver.maximize_window()
+        
+    def safe_click(self, element):
+        """Safely click an element using JavaScript if normal click fails"""
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("arguments[0].click();", element)
 
     def test_multiple_color_names(self):
         """Test multiple color names auto complete"""
@@ -22,7 +30,7 @@ class AutoCompleteTest:
         try:
             # Find multiple color names input
             multi_input = self.driver.find_element(By.ID, "autoCompleteMultipleInput")
-            multi_input.click()
+            self.safe_click(multi_input)
             print("  ✓ Multiple color names input clicked")
             
             # Type partial color name
@@ -82,7 +90,7 @@ class AutoCompleteTest:
         try:
             # Find single color name input
             single_input = self.driver.find_element(By.ID, "autoCompleteSingleInput")
-            single_input.click()
+            self.safe_click(single_input)
             print("  ✓ Single color name input clicked")
             
             # Type partial color name
@@ -184,7 +192,7 @@ class AutoCompleteTest:
         try:
             # Test keyboard navigation in single input
             single_input = self.driver.find_element(By.ID, "autoCompleteSingleInput")
-            single_input.click()
+            self.safe_click(single_input)
             single_input.send_keys("b")
             time.sleep(1)
             print("  ✓ Typed 'b' to trigger suggestions")

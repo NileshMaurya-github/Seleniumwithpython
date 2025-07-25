@@ -110,9 +110,9 @@ class BrowserWindowsTest:
             # Get initial window handle
             original_window = self.driver.current_window_handle
             
-            # Click new window message button
+            # Click new window message button (use JavaScript to avoid ad overlay)
             new_window_msg_btn = self.driver.find_element(By.ID, "messageWindowButton")
-            new_window_msg_btn.click()
+            self.driver.execute_script("arguments[0].click();", new_window_msg_btn)
             print("  ✓ New window message button clicked")
             
             # Wait for new window to open and switch to it

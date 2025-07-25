@@ -161,8 +161,8 @@ class ModalDialogsTest:
             # Wait for modal to appear
             modal = self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "modal-content")))
             
-            # Press Escape key to close modal
-            modal.send_keys(Keys.ESCAPE)
+            # Press Escape key to close modal (send to body element instead)
+            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
             print("  ✓ Escape key pressed")
             
             # Wait for modal to disappear

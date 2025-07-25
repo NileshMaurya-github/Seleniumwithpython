@@ -68,23 +68,28 @@ class APITest:
             self.driver.get("https://demoqa.com/books")
             time.sleep(3)
             
-            # Enable browser logs to capture network requests
-            logs = self.driver.get_log('performance')
-            api_requests = []
-            
-            for log in logs:
-                message = json.loads(log['message'])
-                if message['message']['method'] == 'Network.responseReceived':
-                    url = message['message']['params']['response']['url']
-                    if 'api' in url.lower() or 'bookstore' in url.lower():
-                        api_requests.append(url)
-            
-            if api_requests:
-                print(f"  ✓ Found {len(api_requests)} potential API requests:")
-                for req in api_requests[:5]:  # Show first 5
-                    print(f"    - {req}")
-            else:
-                print("  ⚠️ No obvious API requests detected in network logs")
+            # Try to enable browser logs to capture network requests
+            try:
+                logs = self.driver.get_log('performance')
+                api_requests = []
+                
+                for log in logs:
+                    message = json.loads(log['message'])
+                    if message['message']['method'] == 'Network.responseReceived':
+                        url = message['message']['params']['response']['url']
+                        if 'api' in url.lower() or 'bookstore' in url.lower():
+                            api_requests.append(url)
+                
+                if api_requests:
+                    print(f"  ✓ Found {len(api_requests)} potential API requests:")
+                    for req in api_requests[:5]:  # Show first 5
+                        print(f"    - {req}")
+                else:
+                    print("  ⚠️ No obvious API requests detected in network logs")
+                    
+            except Exception as log_e:
+                print(f"  ⚠️ Could not access performance logs: {log_e}")
+                print("  ✓ Continuing with manual endpoint discovery")
             
             # Try common API endpoint patterns
             common_endpoints = [

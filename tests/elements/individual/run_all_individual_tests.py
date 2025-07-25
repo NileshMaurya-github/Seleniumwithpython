@@ -10,7 +10,7 @@ import sys
 
 # Import all individual test classes
 from test_text_box_individual import TextBoxTest
-from test_checkbox_individual import CheckboxTest
+from test_checkbox_individual import CheckBoxTest
 from test_radio_button_individual import RadioButtonTest
 from test_web_tables_individual import WebTablesTest
 from test_buttons_individual import ButtonsTest
@@ -53,7 +53,7 @@ class ElementsIndividualTestRunner:
         print("\n☑️ RUNNING CHECKBOX INDIVIDUAL TESTS")
         print("=" * 60)
         try:
-            checkbox_test = CheckboxTest()
+            checkbox_test = CheckBoxTest()
             checkbox_test.run_all_checkbox_tests()
             self.results['Checkbox'] = True
         except Exception as e:
@@ -147,14 +147,14 @@ class ElementsIndividualTestRunner:
     def print_summary(self):
         """Print test execution summary"""
         print("\n" + "=" * 80)
-        print("📊 ELEMENTS INDIVIDUAL TESTS EXECUTION SUMMARY")
+        print("ELEMENTS INDIVIDUAL TESTS EXECUTION SUMMARY")
         print("=" * 80)
         
         passed = sum(1 for result in self.results.values() if result)
         total = len(self.results)
         
         for section, result in self.results.items():
-            status = "✅ PASSED" if result else "❌ FAILED"
+            status = "PASSED" if result else "FAILED"
             print(f"{section:<20}: {status}")
         
         print("-" * 80)
@@ -164,11 +164,11 @@ class ElementsIndividualTestRunner:
         print(f"SUCCESS RATE: {success_rate:.1f}%")
         
         if passed == total:
-            print("🎉 ALL INDIVIDUAL TESTS COMPLETED SUCCESSFULLY!")
+            print("ALL INDIVIDUAL TESTS COMPLETED SUCCESSFULLY!")
         elif passed > total // 2:
-            print("⚠️  MOST INDIVIDUAL TESTS PASSED - Some had issues")
+            print("MOST INDIVIDUAL TESTS PASSED - Some had issues")
         else:
-            print("❌ MANY INDIVIDUAL TESTS HAD ISSUES - Check logs above")
+            print("MANY INDIVIDUAL TESTS HAD ISSUES - Check logs above")
         
         return passed == total
     
@@ -176,8 +176,8 @@ class ElementsIndividualTestRunner:
         """Run all or specific sections of individual tests"""
         start_time = time.time()
         
-        print("🚀 Starting DemoQA Elements Individual Test Suite")
-        print(f"⏰ Start time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print("Starting DemoQA Elements Individual Test Suite")
+        print(f"Start time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 80)
         
         # Default to all sections if none specified
@@ -218,7 +218,7 @@ class ElementsIndividualTestRunner:
         
         end_time = time.time()
         duration = end_time - start_time
-        print(f"⏱️  Total execution time: {duration:.2f} seconds")
+        print(f"Total execution time: {duration:.2f} seconds")
         
         return all_passed
 

@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import ElementClickInterceptedException
 import time
 
 
@@ -14,6 +15,13 @@ class SelectMenuTest:
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 10)
         self.driver.maximize_window()
+        
+    def safe_click(self, element):
+        """Safely click an element using JavaScript if normal click fails"""
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("arguments[0].click();", element)
 
     def test_select_value_dropdown(self):
         """Test Select Value dropdown"""
@@ -75,7 +83,7 @@ class SelectMenuTest:
         try:
             # Find Select One dropdown
             select_one_container = self.driver.find_element(By.ID, "selectOne")
-            select_one_container.click()
+            self.safe_click(select_one_container)
             print("  ✓ Select One dropdown clicked")
             
             # Wait for options to appear

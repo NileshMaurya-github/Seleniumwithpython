@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import ElementClickInterceptedException
 import time
 
 
@@ -13,6 +14,13 @@ class AccordianTest:
         self.driver = webdriver.Chrome()
         self.wait = WebDriverWait(self.driver, 10)
         self.driver.maximize_window()
+        
+    def safe_click(self, element):
+        """Safely click an element using JavaScript if normal click fails"""
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("arguments[0].click();", element)
 
     def test_first_section(self):
         """Test first accordian section"""
@@ -22,7 +30,7 @@ class AccordianTest:
         try:
             # Click first section header
             first_section = self.driver.find_element(By.ID, "section1Heading")
-            first_section.click()
+            self.safe_click(first_section)
             print("  ✓ First section header clicked")
             
             # Wait for content to be visible
@@ -36,7 +44,7 @@ class AccordianTest:
             print("  ✓ First section content verified")
             
             # Click again to collapse
-            first_section.click()
+            self.safe_click(first_section)
             print("  ✓ First section collapsed")
             
             print("✅ First section test PASSED")
@@ -54,7 +62,7 @@ class AccordianTest:
         try:
             # Click second section header
             second_section = self.driver.find_element(By.ID, "section2Heading")
-            second_section.click()
+            self.safe_click(second_section)
             print("  ✓ Second section header clicked")
             
             # Wait for content to be visible
@@ -67,7 +75,7 @@ class AccordianTest:
             print("  ✓ Second section content verified")
             
             # Click again to collapse
-            second_section.click()
+            self.safe_click(second_section)
             print("  ✓ Second section collapsed")
             
             print("✅ Second section test PASSED")
@@ -85,7 +93,7 @@ class AccordianTest:
         try:
             # Click third section header
             third_section = self.driver.find_element(By.ID, "section3Heading")
-            third_section.click()
+            self.safe_click(third_section)
             print("  ✓ Third section header clicked")
             
             # Wait for content to be visible
@@ -98,7 +106,7 @@ class AccordianTest:
             print("  ✓ Third section content verified")
             
             # Click again to collapse
-            third_section.click()
+            self.safe_click(third_section)
             print("  ✓ Third section collapsed")
             
             print("✅ Third section test PASSED")
@@ -116,13 +124,13 @@ class AccordianTest:
         try:
             # Open first section
             first_section = self.driver.find_element(By.ID, "section1Heading")
-            first_section.click()
+            self.safe_click(first_section)
             self.wait.until(EC.visibility_of_element_located((By.ID, "section1Content")))
             print("  ✓ First section opened")
             
             # Open second section (should close first)
             second_section = self.driver.find_element(By.ID, "section2Heading")
-            second_section.click()
+            self.safe_click(second_section)
             self.wait.until(EC.visibility_of_element_located((By.ID, "section2Content")))
             print("  ✓ Second section opened")
             
@@ -138,7 +146,7 @@ class AccordianTest:
             
             # Open third section
             third_section = self.driver.find_element(By.ID, "section3Heading")
-            third_section.click()
+            self.safe_click(third_section)
             self.wait.until(EC.visibility_of_element_located((By.ID, "section3Content")))
             print("  ✓ Third section opened")
             

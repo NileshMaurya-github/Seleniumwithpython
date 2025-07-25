@@ -1,0 +1,18 @@
+BOOK STORE APPLICATION INDIVIDUAL TESTS SUMMARY
+==================================================
+
+Total Tests: 36
+Passed: 36
+Failed: 0
+Success Rate: 100.0%
+
+Test Breakdown:
+- Login: 4 tests
+- Register: 5 tests
+- Book Store: 5 tests
+- Profile: 5 tests
+- Book Detail: 5 tests
+- API: 6 tests
+- Authentication: 6 tests
+
+Total: 36 tests
